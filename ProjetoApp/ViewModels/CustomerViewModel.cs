@@ -1,28 +1,4 @@
-//  ---------------------------------------------------------------------------------
-//  Copyright (c) Microsoft Corporation.  All rights reserved.
-// 
-//  The MIT License (MIT)
-// 
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-// 
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-// 
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
-//  ---------------------------------------------------------------------------------
-
-using ProjetoModels;
+using ProjetoApp.Data;
 using ProjetoApp.Commands;
 using PropertyChanged;
 using System;
@@ -45,10 +21,13 @@ namespace ProjetoApp.ViewModels
 
             FirstName = _firstNameOriginal = model.FirstName;
             LastName = _lastNameOriginal = model.LastName;
-            Company = _companyOriginal = model.Company;
             Email = _emailOriginal = model.Email;
             Phone = _phoneOriginal = model.Phone;
             Address = _addressOriginal = model.Address;
+            RG = _rgOriginal = model.RG;
+            CPF = _cpfOriginal = model.CPF;
+            Relation = _relationOriginal = model.Relation;
+
             Id = model.Id;
 
             if (string.IsNullOrWhiteSpace(model.Name))
@@ -57,7 +36,7 @@ namespace ProjetoApp.ViewModels
             }
             else
             {
-                GetOrdersList();
+                GetBuildingsList(model);
             }
         }
 
@@ -81,8 +60,8 @@ namespace ProjetoApp.ViewModels
 
         public bool IsLoading { get; private set; } = false;
 
-        public ObservableCollection<Order> Orders { get; private set; } = 
-            new ObservableCollection<Order>();
+        public ObservableCollection<Building> Buildings { get; private set; } = 
+            new ObservableCollection<Building>();
 
         public Customer Model { get; private set; }
 
@@ -102,7 +81,7 @@ namespace ProjetoApp.ViewModels
                 // Make sure text is entered for name.
                 else if (string.IsNullOrWhiteSpace(value))
                 {
-                    ErrorText = "First name is required. ";
+                    ErrorText = "O nome é obrigatório. ";
                 }
                 else if (SetProperty(ref _firstName, value) == true)
                 {
@@ -128,7 +107,7 @@ namespace ProjetoApp.ViewModels
                 // Make sure text is entered for name.
                 else if (string.IsNullOrWhiteSpace(value))
                 {
-                    ErrorText = "Last name is required. ";
+                    ErrorText = "Sobrenome obrigatório. ";
                 }
                 else if (SetProperty(ref _lastName, value) == true)
                 {
@@ -146,15 +125,39 @@ namespace ProjetoApp.ViewModels
             }
         }
 
-        private string _companyOriginal;
-        private string _company;
-        public string Company
+        private string _rgOriginal;
+        private string _rg;
+        public string RG
         {
-            get { return _company; }
+            get { return _rg; }
 
             set
             {
-                SetProperty(ref _company, value);
+                SetProperty(ref _rg, value);
+            }
+        }
+
+        private string _cpfOriginal;
+        private string _cpf;
+        public string CPF
+        {
+            get { return _cpf; }
+
+            set
+            {
+                SetProperty(ref _cpf, value);
+            }
+        }
+
+        private string _relationOriginal;
+        private string _relation;
+        public string Relation
+        {
+            get { return _relation; }
+
+            set
+            {
+                SetProperty(ref _relation, value);
             }
         }
 
@@ -183,7 +186,7 @@ namespace ProjetoApp.ViewModels
                 }
                 else
                 {
-                    ErrorText = ("Email format is invalid. ");
+                    ErrorText = ("Formato de Email inválido. Utilize xxxx@xxx.xxx ");
                 }
             }
         }
@@ -210,7 +213,7 @@ namespace ProjetoApp.ViewModels
                 }
                 else
                 {
-                    ErrorText = ("Phone number format is invalid. ");
+                    ErrorText = ("Número de telefone inválido. Utilize (xx) xxxxx-xxxx");
                 }
             }
         }
@@ -227,6 +230,8 @@ namespace ProjetoApp.ViewModels
             }
         }
 
+       
+
         private Guid _id;
         public Guid Id
         {
@@ -237,13 +242,13 @@ namespace ProjetoApp.ViewModels
                 SetProperty(ref _id, value);
             }
         }
-        public int OrderCount
+        public int BuildingsCount
         {
             get
             {
-                if (Orders != null)
+                if (Buildings != null)
                 {
-                    return Orders.Count;
+                    return Buildings.Count;
                 }
                 else
                 {
@@ -254,26 +259,25 @@ namespace ProjetoApp.ViewModels
 
         public override string ToString() => $"{Name} ({Email})";
 
-        private async void GetOrdersList()
+        private async void GetBuildingsList(Customer customer)
         {
             IsLoading = true;
 
-            var db = new ContosoDataSource();
-            var orders = await db.Orders.GetAsync(Model);
+            var buildings = await DataProvider.Instance.GetCustomerBuildings(customer);
 
             await Utilities.CallOnUiThreadAsync(() =>
             {
-                if (orders != null)
+                if (buildings != null)
                 {
-                    foreach(Order o in orders)
+                    foreach(Building o in buildings)
                     {
-                        Orders.Add(o);
+                        Buildings.Add(o);
                     }
                 }
                 else
                 {
                     // There was a problem retreiving customers. Let the user know.
-                    ErrorText = "Couldn't retrieve orders.";
+                    ErrorText = "Erro ao buscar os imoveis.";
                 }
 
                 IsLoading = false;
@@ -287,13 +291,15 @@ namespace ProjetoApp.ViewModels
             {
                 Model.FirstName = _firstNameOriginal = FirstName;
                 Model.LastName = _lastNameOriginal = LastName;
-                Model.Company = _companyOriginal = Company;
                 Model.Email = _emailOriginal = Email;
                 Model.Phone = _phoneOriginal = Phone;
                 Model.Address = _addressOriginal = Address;
+                Model.RG = _rgOriginal = RG;
+                Model.CPF = _cpfOriginal = CPF;
+                Model.Relation = _relationOriginal = Relation;
 
-                var db = new ContosoDataSource();
-                await db.Customers.PostAsync(Model);
+                
+                await DataProvider.Instance.SaveCustomerAsync(Model);
 
                 HasChanges = true;
                 if (IsNewCustomer == true)
@@ -307,10 +313,13 @@ namespace ProjetoApp.ViewModels
         {
             FirstName = _firstNameOriginal;
             LastName = _lastNameOriginal;
-            Company = _companyOriginal;
             Email = _emailOriginal;
             Phone = _phoneOriginal;
             Address = _addressOriginal;
+            RG = _rgOriginal;
+            CPF = _cpfOriginal;
+            Relation = _relationOriginal;
+
             ErrorText = null;
         }
 
@@ -321,6 +330,7 @@ namespace ProjetoApp.ViewModels
                 @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$").IsMatch(email);
 
         public bool IsValidPhoneNumber(string phone) =>
-            new Regex(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$").IsMatch(phone);
+            new Regex(@"^\([1-9]{2}\) [2-9][0-9]{3,4}\-[0-9]{4}$").IsMatch(phone);
+        // new Regex(@"^\(?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$").IsMatch(phone);
     }
 }

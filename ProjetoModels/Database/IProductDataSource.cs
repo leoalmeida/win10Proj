@@ -33,16 +33,16 @@ namespace ProjetoModels
         /// <summary>
         /// Gets all products. 
         /// </summary>
-        Task<IEnumerable<Product>> GetAsync();
+        Task<IEnumerable<Building>> GetAsync();
 
         /// <summary>
         /// Gets the product with the given Id. 
         /// </summary>
-        Task<Product> GetAsync(Guid id);
+        Task<Building> GetAsync(Guid id);
 
         /// <summary>
         /// Gets all products with a data field matching the start of the given string. 
         /// </summary>
-        Task<IEnumerable<Product>> GetAsync(string search);
+        Task<IEnumerable<Building>> GetAsync(string search);
     }
 }

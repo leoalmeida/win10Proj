@@ -38,34 +38,34 @@ namespace ProjetoService.Controllers
     [Route("api/[controller]")]
     public class OrderController : Controller
     {
-        private ContosoContext _db = new ContosoContext();
+        private ProjetoContext _db = new ProjetoContext();
 
         /// <summary>
         /// Gets all orders.
         /// </summary>
         [HttpGet]
-        public async Task<IEnumerable<Order>> Get() => await _db.Orders.Include(x => 
+        public async Task<IEnumerable<Negotiation>> Get() => await _db.Orders.Include(x => 
             x.LineItems.Select(y => y.Product)).ToArrayAsync(); 
 
         /// <summary>
         /// Gets the with the given id.
         /// </summary>
         [HttpGet("{id}")]
-        public async Task<Order> Get(Guid id) => await _db.Orders.Include(x => x.LineItems.Select(y => 
+        public async Task<Negotiation> Get(Guid id) => await _db.Orders.Include(x => x.LineItems.Select(y => 
             y.Product)).FirstOrDefaultAsync(x => x.Id == id); 
 
         /// <summary>
         /// Gets all the orders for a given customer. 
         /// </summary>
         [HttpGet("customer/{id}")]
-        public async Task<IEnumerable<Order>> GetCustomerOrders(Guid id) => await _db.Orders.Where(x => 
+        public async Task<IEnumerable<Negotiation>> GetCustomerOrders(Guid id) => await _db.Orders.Where(x => 
             x.CustomerId == id).Include(x => x.LineItems.Select(y => y.Product)).ToArrayAsync();
 
         /// <summary>
         /// Gets all orders with a data field matching the start of the given string.
         /// </summary>
         [HttpGet("search")]
-        public async Task<IEnumerable<Order>> Search(string value)
+        public async Task<IEnumerable<Negotiation>> Search(string value)
         {
             string[] parameters = value.Split(' ');
             return await _db.Orders
@@ -92,7 +92,7 @@ namespace ProjetoService.Controllers
         /// Creates a new order or updates an existing one.
         /// </summary>
         [HttpPost]
-        public async Task<Order> Post([FromBody]Order order)
+        public async Task<Negotiation> Post([FromBody]Negotiation order)
         {
             var existing = await _db.Orders.FirstOrDefaultAsync(x => x.Id == order.Id); 
             // Create new order
@@ -115,7 +115,7 @@ namespace ProjetoService.Controllers
         /// Deletes an order.
         /// </summary>
         [HttpDelete("{id}")]
-        public async Task Delete(Order order)
+        public async Task Delete(Negotiation order)
         {
             var match = await _db.Orders.FirstOrDefaultAsync(x => x.Id == order.Id); 
             if (match != null)

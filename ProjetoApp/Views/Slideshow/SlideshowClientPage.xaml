@@ -1,0 +1,36 @@
+﻿<Page
+    x:Class="ProjetoApp.SlideshowClientPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:data="using:ProjetoApp.Data"
+    xmlns:local="using:ProjetoApp"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    RequestedTheme="Dark"
+    mc:Ignorable="d">
+
+    <Grid Background="{StaticResource DarkBackground}">
+        <TextBlock
+            x:Name="SlideTextBlock"
+            Margin="0,100,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            FontSize="15"
+            Foreground="{StaticResource MainBackground}"
+            Opacity="0.8"
+            Style="{ThemeResource BodyTextBlockStyle}" />
+        <controls:Timeline x:Name="PhotoTimeline" Orientation="Horizontal">
+            <controls:Timeline.ItemTemplate>
+                <DataTemplate x:DataType="data:PhotoData">
+                    <controls:TimelineItem AnimateFocus="False">
+                        <local:SlideshowSlideView
+                            InkChanged="SlideshowSlideView_InkChanged"
+                            Photo="{x:Bind}"
+                            Tapped="SlideshowSlideView_Tapped" />
+                    </controls:TimelineItem>
+                </DataTemplate>
+            </controls:Timeline.ItemTemplate>
+        </controls:Timeline>
+    </Grid>
+</Page>

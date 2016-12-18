@@ -1,28 +1,4 @@
-//  ---------------------------------------------------------------------------------
-//  Copyright (c) Microsoft Corporation.  All rights reserved.
-//
-//  The MIT License (MIT)
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
-//  ---------------------------------------------------------------------------------
-
-using ProjetoModels;
+using ProjetoApp.Data;
 using ProjetoApp.ViewModels;
 using Windows.Foundation.Metadata;
 using Windows.UI.Core;
@@ -33,7 +9,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace ProjetoApp.Views
 {
-    /// <summary>
+    /// <summary>Characteristic
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class CustomerDetailPage : Page
@@ -90,7 +66,7 @@ namespace ProjetoApp.Views
             {
                 searchBox.AutoSuggestBox.QuerySubmitted += CustomerSearchBox_QuerySubmitted;
                 searchBox.AutoSuggestBox.TextChanged += CustomerSearchBox_TextChanged;
-                searchBox.AutoSuggestBox.PlaceholderText = "Search customers...";
+                searchBox.AutoSuggestBox.PlaceholderText = "Pesquisar clientes...";
             }
         }
         /// <summary>
@@ -111,8 +87,7 @@ namespace ProjetoApp.Views
                 }
                 else
                 {
-                    ContosoDataSource data = new ContosoDataSource();
-                    sender.ItemsSource = await data.Customers.GetAsync(sender.Text);
+                    sender.ItemsSource = await DataProvider.Instance.GetCustomersAsync(sender.Text);
                 }
             }
         }
@@ -155,15 +130,15 @@ namespace ProjetoApp.Views
         /// <summary>
         /// Navigates to the order page for the customer.
         /// </summary>
-        private void ViewOrderButton_Click(object sender, RoutedEventArgs e) =>
-            Frame.Navigate(typeof(OrderDetailPage), ((FrameworkElement)sender).DataContext,
+        private void ViewBuildingButton_Click(object sender, RoutedEventArgs e) =>
+            Frame.Navigate(typeof(BuildingDetailPage), ((FrameworkElement)sender).DataContext,
                 new DrillInNavigationTransitionInfo());
 
         /// <summary>
         /// Adds a new order for the customer.
         /// </summary>
-        private void AddOrder_Click(object sender, RoutedEventArgs e) =>
-            Frame.Navigate(typeof(OrderDetailPage), ViewModel.Customer.Model);
+        private void AddBuilding_Click(object sender, RoutedEventArgs e) =>
+            Frame.Navigate(typeof(BuildingDetailPage), ViewModel.Customer.Model);
 
         private void CancelEditButton_Click(object sender, RoutedEventArgs e)
         {

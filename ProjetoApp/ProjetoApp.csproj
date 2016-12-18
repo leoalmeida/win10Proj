@@ -90,6 +90,32 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Compile Include="Controls\Timeline\Timeline.cs" />
+    <Compile Include="Controls\Timeline\TimelineItem.cs" />
+    <Compile Include="Controls\Timeline\TimelineItemInvokedEventArgs.cs" />
+    <Compile Include="Controls\Timeline\TimelinePanel.cs" />
+    <Compile Include="Controls\Timeline\TimelinePanelItemIndexEventArgs.cs" />
+    <Compile Include="Views\Slideshow\RemoteSystemKindToIconConverter.cs" />
+    <Compile Include="Views\Slideshow\SlideshowClientPage.xaml.cs">
+      <DependentUpon>SlideshowClientPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Slideshow\SlideshowPage.xaml.cs">
+      <DependentUpon>SlideshowPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Slideshow\SlideshowSlideView.xaml.cs">
+      <DependentUpon>SlideshowSlideView.xaml</DependentUpon>
+    </Compile>
+    <Content Include="Data\data.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="Controls\DeviceFamilyTrigger.cs" />
+    <Compile Include="Controls\FlexiblePanel.cs" />
+    <Compile Include="Controls\FocusableItem.xaml.cs">
+      <DependentUpon>FocusableItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ImageExFromPhotoData.cs" />
+    <Compile Include="Controls\WrapPanel.cs" />
+    <Compile Include="Ink\InkHelpers.cs" />
     <None Include="project.json" />
     <None Include="ProjetoApp_TemporaryKey.pfx" />
   </ItemGroup>
@@ -100,6 +126,36 @@
     <Compile Include="AppShell.xaml.cs">
       <DependentUpon>AppShell.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Camera\Camera.cs" />
+    <Compile Include="Camera\EffectsGenerator.cs" />
+    <Compile Include="Camera\PictureCapturedEventArgs.cs" />
+    <Compile Include="CognitiveServices\EmotionAPI.cs" />
+    <Compile Include="CognitiveServices\EmotionType.cs" />
+    <Compile Include="CognitiveServices\FaceAPI.cs" />
+    <Compile Include="CognitiveServices\PhotoFace.cs" />
+    <Compile Include="CognitiveServices\VisionAPI.cs" />
+    <Compile Include="Data\Building.cs" />
+    <Compile Include="Data\Characteristic.cs" />
+    <Compile Include="Data\Customer.cs" />
+    <Compile Include="Data\DataProvider.cs" />
+    <Compile Include="Data\DbObject.cs" />
+    <Compile Include="Data\LineItem.cs" />
+    <Compile Include="Data\MyData.cs" />
+    <Compile Include="Data\Negotiation.cs" />
+    <Compile Include="Data\ObjectStorageHelper.cs" />
+    <Compile Include="Data\User.cs" />
+    <Compile Include="Helpers.cs" />
+    <Compile Include="Identity\Identity.cs" />
+    <Compile Include="Ink\InkOverlay.cs" />
+    <Compile Include="Keys.cs" />
+    <Compile Include="Maps\Maps.cs" />
+    <Compile Include="Data\Option.cs" />
+    <Compile Include="Data\PhotoData.cs" />
+    <Compile Include="Speech\ProjetoAideState.cs" />
+    <Compile Include="Speech\ProjetoAideView.xaml.cs">
+      <DependentUpon>ProjetoAideView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Speech\SpeechService.cs" />
     <Compile Include="StateTriggers\MobileScreenTrigger.cs" />
     <Compile Include="UserControls\AuthenticationControl.xaml.cs">
       <DependentUpon>AuthenticationControl.xaml</DependentUpon>
@@ -113,7 +169,7 @@
     <Compile Include="Navigation\NavMenuItem.cs" />
     <Compile Include="Navigation\NavMenuListView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserControls\ContosoListView.cs" />
+    <Compile Include="UserControls\ProjetoListView.cs" />
     <Compile Include="UserControls\DetailExpander.xaml.cs">
       <DependentUpon>DetailExpander.xaml</DependentUpon>
     </Compile>
@@ -128,28 +184,41 @@
     <Compile Include="ValueConverters\GenericConverter.cs" />
     <Compile Include="ValueConverters\NullToBooleanConverter.cs" />
     <Compile Include="ValueConverters\NullToVisibilityConverter.cs" />
-    <Compile Include="ValueConverters\OrderStatusToStringConverter.cs" />
-    <Compile Include="ValueConverters\PaymentStatusToStringConverter.cs" />
+    <Compile Include="ValueConverters\BuildingStatusToStringConverter.cs" />
     <Compile Include="ValueConverters\StringVisibilityConverter.cs" />
     <Compile Include="ValueConverters\StringFormatterConverter.cs" />
-    <Compile Include="ValueConverters\TermToStringConverter.cs" />
     <Compile Include="ViewModels\BindableBase.cs" />
     <Compile Include="ViewModels\CustomerDetailPageViewModel.cs" />
     <Compile Include="ViewModels\CustomerListPageViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
-    <Compile Include="ViewModels\OrderDetailPageViewModel.cs" />
-    <Compile Include="ViewModels\OrderListPageViewModel.cs" />
+    <Compile Include="ViewModels\BuildingDetailPageViewModel.cs" />
+    <Compile Include="ViewModels\BuildingListPageViewModel.cs" />
+    <Compile Include="Views\CapturePage.xaml.cs">
+      <DependentUpon>CapturePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CustomerDetailPage.xaml.cs">
       <DependentUpon>CustomerDetailPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CustomerListPage.xaml.cs">
       <DependentUpon>CustomerListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\OrderDetailPage.xaml.cs">
-      <DependentUpon>OrderDetailPage.xaml</DependentUpon>
+    <Compile Include="Views\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\OrderListPage.xaml.cs">
-      <DependentUpon>OrderListPage.xaml</DependentUpon>
+    <Compile Include="Views\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OptionPage.xaml.cs">
+      <DependentUpon>OptionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BuildingDetailPage.xaml.cs">
+      <DependentUpon>BuildingDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BuildingListPage.xaml.cs">
+      <DependentUpon>BuildingListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PhotoPreviewView.xaml.cs">
+      <DependentUpon>PhotoPreviewView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SaveChangesDialog.xaml.cs">
       <DependentUpon>SaveChangesDialog.xaml</DependentUpon>
@@ -181,6 +250,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\FocusableItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Speech\ProjetoAideView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserControls\AuthenticationControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -202,6 +279,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\CapturePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\CustomerDetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -210,25 +291,54 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\OrderDetailPage.xaml">
+    <Page Include="Views\LoginPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\OptionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BuildingDetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\OrderListPage.xaml">
+    <Page Include="Views\BuildingListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PhotoPreviewView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SaveChangesDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Slideshow\SlideshowClientPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Slideshow\SlideshowPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Slideshow\SlideshowSlideView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\ProjetoModels\ProjetoModels.csproj">
-      <Project>{a4ae13ca-7436-4244-bac0-0c3408ea70dd}</Project>
-      <Name>ContosoModels</Name>
-    </ProjectReference>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="WindowsMobile, Version=10.0.10586.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -14,7 +14,7 @@ namespace ProjetoService.Controllers
     [Route("api/[controller]")]
     public class CustomerController : Controller
     {
-        private ContosoContext _db = new ContosoContext();
+        private ProjetoContext _db = new ProjetoContext();
 
         /// <summary>
         /// Gets all customers. 

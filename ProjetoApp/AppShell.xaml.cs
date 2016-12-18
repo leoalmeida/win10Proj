@@ -1,39 +1,18 @@
-//  ---------------------------------------------------------------------------------
-//  Copyright (c) Microsoft Corporation.  All rights reserved.
-// 
-//  The MIT License (MIT)
-// 
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-// 
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-// 
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
-//  ---------------------------------------------------------------------------------
-
 using ProjetoApp.Navigation;
 using ProjetoApp.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.Foundation;
+
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+
 using Windows.UI.Xaml.Navigation;
+
 
 namespace ProjetoApp
 {
@@ -44,6 +23,7 @@ namespace ProjetoApp
     public sealed partial class AppShell : Page
     {
         private bool isPaddingAdded = false;
+
         // Declare the top level nav items
         private List<NavMenuItem> navlist = new List<NavMenuItem>(
             new[]
@@ -51,14 +31,14 @@ namespace ProjetoApp
                 new NavMenuItem()
                 {
                     Symbol = Symbol.ContactInfo,
-                    Label = "Customer list",
+                    Label = "Lista Clientes",
                     DestPage = typeof(CustomerListPage)
                 },
                 new NavMenuItem()
                 {
-                    Symbol = Symbol.Shop,
-                    Label = "Order list",
-                    DestPage = typeof(OrderListPage)
+                    Symbol = Symbol.Street,
+                    Label = "Lista Imóveis",
+                    DestPage = typeof(BuildingListPage)
                 },
             });
 
@@ -71,8 +51,9 @@ namespace ProjetoApp
         /// </summary>
         public AppShell()
         {
-            InitializeComponent();
 
+            InitializeComponent();
+            
             Loaded += (sender, args) =>
             {
                 Current = this;
@@ -81,6 +62,7 @@ namespace ProjetoApp
 
                 var titleBar = Windows.ApplicationModel.Core.CoreApplication.GetCurrentView().TitleBar;
                 titleBar.IsVisibleChanged += TitleBar_IsVisibleChanged;
+
             };
 
             RootSplitView.RegisterPropertyChangedCallback(
@@ -95,6 +77,7 @@ namespace ProjetoApp
             SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManager_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
 
+            // Speech.SpeechService.Instance.Initialize();
 
             NavMenuList.ItemsSource = navlist;
         }

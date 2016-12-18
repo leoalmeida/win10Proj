@@ -1,27 +1,3 @@
-//  ---------------------------------------------------------------------------------
-//  Copyright (c) Microsoft Corporation.  All rights reserved.
-//
-//  The MIT License (MIT)
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
-//  ---------------------------------------------------------------------------------
-
 using ProjetoApp.ViewModels;
 using PropertyChanged;
 using System;
@@ -42,8 +18,8 @@ namespace ProjetoApp.Views
     [ImplementPropertyChanged]
     public sealed partial class CustomerListPage : Page
     {
-        private enum SortOption { ByName, ByCompany };
-        private enum GroupOption { ByName, ByCompany };
+        private enum SortOption { ByName, ByRG };
+        private enum GroupOption { ByName, ByRG };
         public CustomerListPageViewModel ViewModel { get; set; } = new CustomerListPageViewModel();
 
         /// <summary>
@@ -98,7 +74,7 @@ namespace ProjetoApp.Views
             {
                 searchBox.AutoSuggestBox.QuerySubmitted += CustomerSearchBox_QuerySubmitted;
                 searchBox.AutoSuggestBox.TextChanged += CustomerSearchBox_TextChanged;
-                searchBox.AutoSuggestBox.PlaceholderText = "Search customers...";
+                searchBox.AutoSuggestBox.PlaceholderText = "Pesquisar clientes...";
             }
         }
 
@@ -137,19 +113,21 @@ namespace ProjetoApp.Views
                                 x.Address.StartsWith(y, StringComparison.OrdinalIgnoreCase) ||
                                 x.FirstName.StartsWith(y, StringComparison.OrdinalIgnoreCase) ||
                                 x.LastName.StartsWith(y, StringComparison.OrdinalIgnoreCase) ||
-                                x.Company.StartsWith(y, StringComparison.OrdinalIgnoreCase)))
+                                x.RG.StartsWith(y, StringComparison.OrdinalIgnoreCase) ||
+                                x.CPF.StartsWith(y, StringComparison.OrdinalIgnoreCase)))
                         .OrderByDescending(x => parameters
                             .Count(y =>
                                 x.Address.StartsWith(y, StringComparison.OrdinalIgnoreCase) ||
                                 x.FirstName.StartsWith(y, StringComparison.OrdinalIgnoreCase) ||
                                 x.LastName.StartsWith(y, StringComparison.OrdinalIgnoreCase) ||
-                                x.Company.StartsWith(y, StringComparison.OrdinalIgnoreCase)));
+                                x.RG.StartsWith(y, StringComparison.OrdinalIgnoreCase) ||
+                                x.CPF.StartsWith(y, StringComparison.OrdinalIgnoreCase)));
                 }
             }
         }
 
         /// <summary>
-        /// Search by customer first or last name, address, or company then display results.
+        /// Search by customer first or last name, address, or RG then display results.
         /// </summary>
         private void CustomerSearchBox_QuerySubmitted(AutoSuggestBox sender,
             AutoSuggestBoxQuerySubmittedEventArgs args)
@@ -176,13 +154,15 @@ namespace ProjetoApp.Views
                                 x.Address.StartsWith(y, StringComparison.OrdinalIgnoreCase) ||
                                 x.FirstName.StartsWith(y, StringComparison.OrdinalIgnoreCase) ||
                                 x.LastName.StartsWith(y, StringComparison.OrdinalIgnoreCase) ||
-                                x.Company.StartsWith(y, StringComparison.OrdinalIgnoreCase)))
+                                x.RG.StartsWith(y, StringComparison.OrdinalIgnoreCase) ||
+                                x.CPF.StartsWith(y, StringComparison.OrdinalIgnoreCase)))
                         .OrderByDescending(x => parameters
                             .Count(y =>
                                 x.Address.StartsWith(y, StringComparison.OrdinalIgnoreCase) ||
                                 x.FirstName.StartsWith(y, StringComparison.OrdinalIgnoreCase) ||
                                 x.LastName.StartsWith(y, StringComparison.OrdinalIgnoreCase) ||
-                                x.Company.StartsWith(y, StringComparison.OrdinalIgnoreCase)));
+                                x.RG.StartsWith(y, StringComparison.OrdinalIgnoreCase) ||
+                                x.CPF.StartsWith(y, StringComparison.OrdinalIgnoreCase)));
                 }
             }
         }
@@ -192,19 +172,19 @@ namespace ProjetoApp.Views
         private void MenuFlyoutSortByName_Click(object sender, RoutedEventArgs e) =>
             SortList(SortOption.ByName);
 
-        private void MenuFlyoutSortByCompany_Click(object sender, RoutedEventArgs e) =>
-            SortList(SortOption.ByCompany);
+        private void MenuFlyoutSortByRG_Click(object sender, RoutedEventArgs e) =>
+            SortList(SortOption.ByRG);
 
         private void MenuFlyoutGroupByName_Click(object sender, RoutedEventArgs e) =>
             GroupList(GroupOption.ByName);
 
-        private void MenuFlyoutGroupByCompany_Click(object sender, RoutedEventArgs e) =>
-            GroupList(GroupOption.ByCompany);
+        private void MenuFlyoutGroupByRG_Click(object sender, RoutedEventArgs e) =>
+            GroupList(GroupOption.ByRG);
 
         #endregion
 
         /// <summary>
-        /// Sorts a list of customers by last name or company.
+        /// Sorts a list of customers by last name or RG.
         /// </summary>
         private void SortList(SortOption option)
         {
@@ -217,8 +197,8 @@ namespace ProjetoApp.Views
                     case SortOption.ByName:
                         cvs.Source = ViewModel.Customers.OrderByDescending(customer => customer.LastName);
                         break;
-                    case SortOption.ByCompany:
-                        cvs.Source = ViewModel.Customers.OrderByDescending(customer => customer.Company);
+                    case SortOption.ByRG:
+                        cvs.Source = ViewModel.Customers.OrderByDescending(customer => customer.RG);
                         break;
                     default:
                         break;
@@ -227,7 +207,7 @@ namespace ProjetoApp.Views
         }
 
         /// <summary>
-        /// Groups a list of customers by last name or company.
+        /// Groups a list of customers by last name or RG.
         /// </summary>
         private void GroupList(GroupOption option)
         {
@@ -240,8 +220,8 @@ namespace ProjetoApp.Views
                     case GroupOption.ByName:
                         cvs.Source = ViewModel.Customers.GroupBy(customer => customer.LastName);
                         break;
-                    case GroupOption.ByCompany:
-                        cvs.Source = ViewModel.Customers.GroupBy(customer => customer.Company);
+                    case GroupOption.ByRG:
+                        cvs.Source = ViewModel.Customers.GroupBy(customer => customer.RG);
                         break;
                     default:
                         cvs.IsSourceGrouped = false;
@@ -257,24 +237,8 @@ namespace ProjetoApp.Views
         {
             if (ApiInformation.IsPropertyPresent("Windows.UI.Xaml.Controls.CommandBar", "DefaultLabelPosition"))
             {
-                if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
-                {
-                    (sender as CommandBar).DefaultLabelPosition = CommandBarDefaultLabelPosition.Bottom;
-                }
-                else
-                {
-                    (sender as CommandBar).DefaultLabelPosition = CommandBarDefaultLabelPosition.Right;
-                }
-            }
-            else
-            {
-                if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
-                {
-                    var lastCommand = mainCommandBar.PrimaryCommands.Last();
-
-                    mainCommandBar.PrimaryCommands.Remove(lastCommand);
-                    mainCommandBar.SecondaryCommands.Add(lastCommand);
-                }
+                (sender as CommandBar).DefaultLabelPosition = CommandBarDefaultLabelPosition.Right;
+                
             }
         }
 
@@ -317,7 +281,7 @@ namespace ProjetoApp.Views
         /// <summary>
         /// Opens the order detail page for the user to create an order for the selected customer.
         /// </summary>
-        private void AddOrder_Click(object sender, RoutedEventArgs e)
+        private void AddBuilding_Click(object sender, RoutedEventArgs e)
         {
             if (sender is MenuFlyoutItem)
             {
@@ -340,6 +304,6 @@ namespace ProjetoApp.Views
         /// Navigates to the order detail page for the provided customer.
         /// </summary>
         private void GoToOrderPage(CustomerViewModel customer) =>
-            Frame.Navigate(typeof(OrderDetailPage), customer.Model);
+            Frame.Navigate(typeof(BuildingDetailPage), customer.Model);
     }
 }

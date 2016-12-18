@@ -4,23 +4,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjetoApp", "ProjetoApp\ProjetoApp.csproj", "{FD02E736-1832-4D38-847F-0A11087B3AF1}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A4AE13CA-7436-4244-BAC0-0C3408EA70DD} = {A4AE13CA-7436-4244-BAC0-0C3408EA70DD}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjetoModels", "ProjetoModels\ProjetoModels.csproj", "{A4AE13CA-7436-4244-BAC0-0C3408EA70DD}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ProjetoService", "ProjetoService\ProjetoService.xproj", "{48D256E1-5354-455C-850D-95A33BC55B1F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A4AE13CA-7436-4244-BAC0-0C3408EA70DD} = {A4AE13CA-7436-4244-BAC0-0C3408EA70DD}
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4B81D8C2-FA16-4ACA-B497-2CD551849C21}"
-	ProjectSection(SolutionItems) = preProject
-		CONTRIBUTING.md = CONTRIBUTING.md
-		LICENSE = LICENSE
-		README.md = README.md
-		ThirdPartyNotices.txt = ThirdPartyNotices.txt
 	EndProjectSection
 EndProject
 Global

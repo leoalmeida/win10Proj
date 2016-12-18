@@ -31,20 +31,20 @@ namespace ProjetoModels
 {
     internal class AzureOrderDataSource : IOrderDataSource
     {
-        public async Task<IEnumerable<Order>> GetAsync() =>
-            await ApiHelper.GetAsync<IEnumerable<Order>>("order");
+        public async Task<IEnumerable<Negotiation>> GetAsync() =>
+            await ApiHelper.GetAsync<IEnumerable<Negotiation>>("order");
 
-        public async Task<Order> GetAsync(Guid id) =>
-            await ApiHelper.GetAsync<Order>($"order/{id}");
+        public async Task<Negotiation> GetAsync(Guid id) =>
+            await ApiHelper.GetAsync<Negotiation>($"order/{id}");
 
-        public async Task<IEnumerable<Order>> GetAsync(Customer customer) =>
-            await ApiHelper.GetAsync<IEnumerable<Order>>($"order/customer/{customer.Id}");
+        public async Task<IEnumerable<Negotiation>> GetAsync(Customer customer) =>
+            await ApiHelper.GetAsync<IEnumerable<Negotiation>>($"order/customer/{customer.Id}");
 
-        public async Task<IEnumerable<Order>> GetAsync(string search) =>
-            await ApiHelper.GetAsync<IEnumerable<Order>>($"order/search?value={search}");
+        public async Task<IEnumerable<Negotiation>> GetAsync(string search) =>
+            await ApiHelper.GetAsync<IEnumerable<Negotiation>>($"order/search?value={search}");
 
-        public async Task<Order> PostAsync(Order order) =>
-            await ApiHelper.PostAsync<Order, Order>("order", order);
+        public async Task<Negotiation> PostAsync(Negotiation order) =>
+            await ApiHelper.PostAsync<Negotiation, Negotiation>("order", order);
 
         public async Task<HttpResponseMessage> DeleteAsync(Guid orderId) =>
             await ApiHelper.DeleteAsync<HttpResponseMessage>("order", orderId);

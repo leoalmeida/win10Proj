@@ -34,28 +34,28 @@ namespace ProjetoModels
         /// <summary>
         /// Gets all orders. 
         /// </summary>
-        Task<IEnumerable<Order>> GetAsync();
+        Task<IEnumerable<Negotiation>> GetAsync();
 
         /// <summary>
         /// Gets all the given customer's orders. 
         /// </summary>
-        Task<IEnumerable<Order>> GetAsync(Customer customer);
+        Task<IEnumerable<Negotiation>> GetAsync(Customer customer);
 
         /// <summary>
         /// Gets the order with the given id.
         /// </summary>
-        Task<Order> GetAsync(Guid orderId);
+        Task<Negotiation> GetAsync(Guid orderId);
 
         /// <summary>
         /// Gets all order with a data field matching the start of the given string. 
         /// </summary>
-        Task<IEnumerable<Order>> GetAsync(string search);
+        Task<IEnumerable<Negotiation>> GetAsync(string search);
 
         /// <summary>
         /// Adds a new order if the order does not exist, updates the 
         /// existing order otherwise.
         /// </summary>
-        Task<Order> PostAsync(Order order);
+        Task<Negotiation> PostAsync(Negotiation order);
 
         /// <summary>
         /// Deletes an order.

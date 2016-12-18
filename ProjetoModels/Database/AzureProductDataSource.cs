@@ -30,13 +30,13 @@ namespace ProjetoModels
 {
     internal class AzureProductDataSource : IProductDataSource
     {
-        public async Task<IEnumerable<Product>> GetAsync() =>
-            await ApiHelper.GetAsync<IEnumerable<Product>>("product"); 
+        public async Task<IEnumerable<Building>> GetAsync() =>
+            await ApiHelper.GetAsync<IEnumerable<Building>>("product"); 
 
-        public async Task<Product> GetAsync(Guid id) => 
-            await ApiHelper.GetAsync<Product>($"product/{id}");
+        public async Task<Building> GetAsync(Guid id) => 
+            await ApiHelper.GetAsync<Building>($"product/{id}");
 
-        public async Task<IEnumerable<Product>> GetAsync(string search) =>
-            await ApiHelper.GetAsync<IEnumerable<Product>>($"product/search?value={search}");
+        public async Task<IEnumerable<Building>> GetAsync(string search) =>
+            await ApiHelper.GetAsync<IEnumerable<Building>>($"product/search?value={search}");
     }
 }
