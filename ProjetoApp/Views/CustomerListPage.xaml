@@ -26,12 +26,12 @@
                 Click="ViewDetails_Click"
                 Style="{StaticResource MenuFlyoutItemIconTemplate}"
                 Tag="&#xE1A5;"
-                Text="View details" />
+                Text="Visualizar Detalhes" />
             <MenuFlyoutItem
                 Click="AddBuilding_Click"
                 Style="{StaticResource MenuFlyoutItemIconTemplate}"
                 Tag="&#xE14D;"
-                Text="Add order" />
+                Text="Novo imóvel" />
             <MenuFlyoutSubItem Text="Sort by">
                 <MenuFlyoutItem Click="MenuFlyoutSortByName_Click" Text="Last name" />
                 <MenuFlyoutItem Click="MenuFlyoutSortByRG_Click" Text="RG" />
@@ -42,12 +42,12 @@
             </MenuFlyoutSubItem>
         </MenuFlyout>
 
-        <x:Double x:Key="FirstNameWidth">150</x:Double>
+        <x:Double x:Key="FirstNameWidth">120</x:Double>
         <x:Double x:Key="LastNameWidth">150</x:Double>
-        <x:Double x:Key="PhoneNumberWidth">80</x:Double>
-        <x:Double x:Key="EmailAddressWidth">150</x:Double>
-        <x:Double x:Key="RGWidth">80</x:Double>
-        <x:Double x:Key="CPFWidth">80</x:Double>
+        <x:Double x:Key="PhoneNumberWidth">100</x:Double>
+        <x:Double x:Key="EmailAddressWidth">200</x:Double>
+        <x:Double x:Key="RGWidth">100</x:Double>
+        <x:Double x:Key="CPFWidth">100</x:Double>
 
 
         <DataTemplate x:Key="WideListItemTemplate" x:DataType="viewModels:CustomerViewModel">
@@ -56,8 +56,6 @@
                 <TextBlock Width="{StaticResource LastNameWidth}" Text="{x:Bind LastName}" />
                 <TextBlock Width="{StaticResource PhoneNumberWidth}" Text="{x:Bind Phone}" />
                 <TextBlock Width="{StaticResource EmailAddressWidth}" Text="{x:Bind Email}" />
-                <TextBlock Width="{StaticResource RGWidth}" Text="{x:Bind RG}" />
-                <TextBlock Width="{StaticResource CPFWidth}" Text="{x:Bind CPF}" />
             </StackPanel>
         </DataTemplate>
 
@@ -74,27 +72,15 @@
 
                 <StackPanel Grid.Column="1">
                     <TextBlock
-                        Width="{StaticResource EmailAddressWidth}"
-                        HorizontalAlignment="Left"
-                        Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind Email}" />
-                    <TextBlock
                         Width="{StaticResource PhoneNumberWidth}"
                         HorizontalAlignment="Left"
                         Style="{StaticResource CaptionTextBlockStyle}"
                         Text="{x:Bind Phone}" />
-                </StackPanel>
-                <StackPanel Grid.Column="2">
                     <TextBlock
-                        Width="{StaticResource RGWidth}"
+                        Width="{StaticResource EmailAddressWidth}"
                         HorizontalAlignment="Left"
                         Style="{StaticResource CaptionTextBlockStyle}"
                         Text="{x:Bind Email}" />
-                    <TextBlock
-                        Width="{StaticResource CPFWidth}"
-                        HorizontalAlignment="Left"
-                        Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind Phone}" />
                 </StackPanel>
             </Grid>
         </DataTemplate>
@@ -125,30 +111,30 @@
                     Icon="Contact"
                     IsEnabled="{x:Bind ViewModel.SelectedCustomer, Converter={StaticResource nullToBoolConverter}, Mode=OneWay}"
                     Label="Ver detalhes"
-                    ToolTipService.ToolTip="View details" />
+                    ToolTipService.ToolTip="Visualizar detalhes" />
                 <AppBarButton
                     Click="AddBuilding_Click"
                     Icon="Street"
                     IsEnabled="{x:Bind ViewModel.SelectedCustomer, Converter={StaticResource nullToBoolConverter}, Mode=OneWay}"
                     Label="Novo"
-                    ToolTipService.ToolTip="Add order" />
+                    ToolTipService.ToolTip="Novo Imóvel" />
                 <AppBarButton
                     Command="{x:Bind ViewModel.StartEditCommand}"
                     Icon="Edit"
                     IsEnabled="{x:Bind ViewModel.SelectedCustomer, Converter={StaticResource nullToBoolConverter}, Mode=OneWay}"
                     Label="Editar"
-                    ToolTipService.ToolTip="Edit" />
+                    ToolTipService.ToolTip="Editar Cliente" />
                 <AppBarSeparator />
                 <AppBarButton
                     Click="CreateCustomer_Click"
                     Icon="Add"
-                    Label="New"
+                    Label="Novo"
                     ToolTipService.ToolTip="Novo Cliente" />
                 <AppBarButton
                     Command="{x:Bind ViewModel.RefreshCommand}"
                     Icon="Refresh"
                     Label="Refresh"
-                    ToolTipService.ToolTip="Refresh list" />
+                    ToolTipService.ToolTip="Atualizar Lista" />
 
             </CommandBar>
             <uc:CollapsibleSearchBox
@@ -211,6 +197,10 @@
                             </StackPanel.Resources>
                             <TextBlock FontWeight="SemiBold" Text="Name" />
                             <TextBlock Margin="0,0,0,16" Text="{x:Bind ViewModel.SelectedCustomer.Name, Mode=OneWay}" />
+                            <TextBlock FontWeight="SemiBold" Text="RG" />
+                            <TextBlock Margin="0,0,0,16" Text="{x:Bind ViewModel.SelectedCustomer.RG, Mode=OneWay}" />
+                            <TextBlock FontWeight="SemiBold" Text="CPF" />
+                            <TextBlock Margin="0,0,0,16" Text="{x:Bind ViewModel.SelectedCustomer.CPF, Mode=OneWay}" />
                             <TextBlock FontWeight="SemiBold" Text="Phone" />
                             <TextBlock Margin="0,0,0,16" Text="{x:Bind ViewModel.SelectedCustomer.Phone, Mode=OneWay}" />
                             <TextBlock FontWeight="SemiBold" Text="Email" />
@@ -225,6 +215,7 @@
                                 Margin="0,0,0,16"
                                 Padding="0,0,0,0"
                                 Content="{x:Bind ViewModel.SelectedCustomer.Address, Mode=OneWay}" />
+
                         </StackPanel>
 
                         <ScrollViewer
@@ -257,6 +248,14 @@
                                     x:Name="CustomerLastNameText"
                                     Header="Sobrenome"
                                     Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox
+                                    x:Name="CustomerRGText"
+                                    Header="RG"
+                                    Text="{Binding RG, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox
+                                    x:Name="CustomerCPFText"
+                                    Header="CPF"
+                                    Text="{Binding CPF, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBox
                                     x:Name="CustomerPhoneNumber"
                                     Header="Telefone"
@@ -343,10 +342,9 @@
                                 Margin="8,0,0,0"
                                 Text="Nome" />
                             <TextBlock Width="{StaticResource LastNameWidth}" Text="Sobrenome" />
-                            <TextBlock Width="{StaticResource EmailAddressWidth}" Text="Email" />
                             <TextBlock Width="{StaticResource PhoneNumberWidth}" Text="Telefone" />
-                            <TextBlock Width="{StaticResource RGWidth}" Text="RG" />
-                            <TextBlock Width="{StaticResource CPFWidth}" Text="CPF" />
+                            <TextBlock Width="{StaticResource EmailAddressWidth}" Text="Email" />
+
                         </StackPanel>
                         <!--  This progress indicator should be hidden when the data is finished loading in GetCustomerList.  -->
                         <ProgressBar

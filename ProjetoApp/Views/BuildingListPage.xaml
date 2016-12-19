@@ -133,7 +133,7 @@
                             </Style>
                         </StackPanel.Resources>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock FontWeight="SemiBold" Text="Invoice #" />
+                            <TextBlock FontWeight="SemiBold" Text="Valor: R$" />
                             <TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.SelectedBuilding.ListedValue, Mode=OneWay}" />
                         </StackPanel>
 
@@ -141,20 +141,28 @@
                             <TextBlock
                                 FontWeight="SemiBold"
                                 IsTextSelectionEnabled="True"
-                                Text="{x:Bind ViewModel.SelectedBuilding.CustomerName, Mode=OneWay}" />
-                            <TextBlock IsTextSelectionEnabled="True" Text="{x:Bind ViewModel.SelectedCustomer.Phone, Mode=OneWay}" />
+                                Text="{x:Bind ViewModel.SelectedBuilding.Customer.Name, Mode=OneWay}" />
+                            <TextBlock IsTextSelectionEnabled="True" Text="{x:Bind ViewModel.SelectedBuilding.Customer.Phone, Mode=OneWay}" />
                             <HyperlinkButton
                                 Margin="0,0,0,0"
                                 Padding="0,0,0,0"
                                 Click="EmailButton_Click"
-                                Content="{x:Bind ViewModel.SelectedCustomer.Email, Mode=OneWay}" />
+                                Content="{x:Bind ViewModel.SelectedBuilding.Customer.Email, Mode=OneWay}" />
                         </StackPanel>
 
                         <TextBlock FontWeight="SemiBold">Endereco</TextBlock>
-                        <TextBlock Text="{x:Bind ViewModel.SelectedBuilding.AddressStreet, Mode=OneWay}" />
+                        <StackPanel Margin="0,20,0,20">
+                            <TextBlock Text="{x:Bind ViewModel.SelectedBuilding.AddressType, Mode=OneWay}" />
+                            <TextBlock Text="{x:Bind ViewModel.SelectedBuilding.AddressStreet, Mode=OneWay}" />
+                            <TextBlock Text="{x:Bind ViewModel.SelectedBuilding.AddressStreetNumber, Mode=OneWay}" />
+                            <TextBlock Text="{x:Bind ViewModel.SelectedBuilding.AddressComplement, Mode=OneWay}" />
 
-                        <TextBlock Margin="0,20,0,0" FontWeight="SemiBold">Estado</TextBlock>
-                        <TextBlock Text="{x:Bind ViewModel.SelectedBuilding.Status, Mode=OneWay}" />
+                        </StackPanel>
+                        <StackPanel Margin="0,20,0,20">
+                            <TextBlock Text="{x:Bind ViewModel.SelectedBuilding.AddressNeigborhood, Mode=OneWay}" />
+                            <TextBlock Text="{x:Bind ViewModel.SelectedBuilding.AddressCity, Mode=OneWay}" />
+                            <TextBlock Text="{x:Bind ViewModel.SelectedBuilding.AddressState, Mode=OneWay}" />
+                        </StackPanel>
 
 
                     </StackPanel>
@@ -249,7 +257,7 @@
                                             <TextBlock
                                                 Grid.Column="1"
                                                 HorizontalAlignment="Stretch"
-                                                Text="{x:Bind AddressStreet, Mode=OneWay}" />
+                                                Text="{x:Bind FullAddress, Mode=OneWay}" />
                                             <TextBlock
                                                 Grid.Column="2"
                                                 HorizontalAlignment="Stretch"

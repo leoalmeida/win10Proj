@@ -127,18 +127,18 @@ namespace ProjetoApp.ViewModels
         /// </summary>
         public async void LoadBuildings()
         {
+            
             await Utilities.CallOnUiThreadAsync(() =>
             {
                 IsLoading = true;
-                // Buildings.Clear();
+                Buildings.Clear();
                 masterBuildingsList.Clear();
             });
-            
-            var Buildings = await DataProvider.Instance.GetBuildings();
 
+            var listBuildings = await DataProvider.Instance.GetBuildings();
             await Utilities.CallOnUiThreadAsync(() =>
             {
-                foreach(Building o in Buildings)
+                foreach(Building o in listBuildings)
                 {
                     Buildings.Add(o);
                     masterBuildingsList.Add(o);

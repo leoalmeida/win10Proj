@@ -22,6 +22,7 @@ namespace ProjetoApp.Data
         {
             Customer = customer;
             CustomerName = $"{customer.FirstName} {customer.LastName}";
+            FullAddress = $"{AddressType} {AddressStreet} {AddressStreetNumber} {AddressComplement}, {AddressNeigborhood}";
         }
 
         /// <summary>
@@ -38,6 +39,11 @@ namespace ProjetoApp.Data
         /// Gets or sets the name of the customer placing the order.
         /// </summary>
         public string CustomerName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the customer placing the order.
+        /// </summary>
+        public string FullAddress { get; set; }
 
         /// <summary>
         /// Gets or sets the building's street type.
@@ -89,12 +95,7 @@ namespace ProjetoApp.Data
         /// </summary>
         public virtual List<Characteristic> Characteristics { get; set; } = new List<Characteristic>();
 
-
-        /// <summary>
-        /// Gets or sets the items in the Building.
-        /// </summary>
-        public virtual List<Building> Buildings { get; set; } = new List<Building>();
-
+        
         /// <summary>
         /// Gets or sets the size the building.
         /// </summary>

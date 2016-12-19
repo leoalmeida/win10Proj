@@ -242,6 +242,7 @@ namespace ProjetoApp.ViewModels
                 SetProperty(ref _id, value);
             }
         }
+
         public int BuildingsCount
         {
             get
@@ -265,7 +266,7 @@ namespace ProjetoApp.ViewModels
 
             var buildings = await DataProvider.Instance.GetCustomerBuildings(customer);
 
-            await Utilities.CallOnUiThreadAsync(() =>
+            /* await Utilities.CallOnUiThreadAsync(() =>
             {
                 if (buildings != null)
                 {
@@ -281,7 +282,7 @@ namespace ProjetoApp.ViewModels
                 }
 
                 IsLoading = false;
-            });
+            });*/
         }
 
         public RelayCommand SaveCommand { get; private set; }

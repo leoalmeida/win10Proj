@@ -109,7 +109,8 @@
                             <RelativePanel>
                                 <TextBox
                                     x:Name="FirstName"
-                                    MinWidth="120"
+                                    Grid.Column="2"
+                                    MinWidth="160"
                                     Margin="0,0,16,0"
                                     Header="Nome"
                                     IsReadOnly="{x:Bind ViewModel.IsInEdit, Converter={StaticResource boolInverterConverter}, Mode=OneWay}"
@@ -118,13 +119,25 @@
                                     Visibility="{x:Bind ViewModel.IsInEdit, Converter={StaticResource boolToVisConverter}, Mode=OneWay}" />
                                 <TextBox
                                     x:Name="LastName"
-                                    MinWidth="120"
+                                    Grid.Column="2"
+                                    MinWidth="200"
                                     Margin="0,0,16,0"
                                     Header="Sobrenome"
                                     IsReadOnly="{x:Bind ViewModel.IsInEdit, Converter={StaticResource boolInverterConverter}, Mode=OneWay}"
                                     RelativePanel.RightOf="FirstName"
                                     Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     Visibility="{x:Bind ViewModel.IsInEdit, Converter={StaticResource boolToVisConverter}, Mode=OneWay}" />
+                                <TextBox
+                                    x:Name="RGText"
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    MinWidth="132"
+                                    Margin="0,16,16,0"
+                                    Header="RG"
+                                    IsReadOnly="{x:Bind ViewModel.IsInEdit, Converter={StaticResource boolInverterConverter}, Mode=OneWay}"
+                                    RelativePanel.AlignLeftWithPanel="True"
+                                    RelativePanel.Below="FirstName"
+                                    Text="{Binding RG, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                                 <TextBox
                                     x:Name="PhoneNumber"
@@ -136,8 +149,9 @@
                                     InputScope="TelephoneNumber"
                                     IsReadOnly="{x:Bind ViewModel.IsInEdit, Converter={StaticResource boolInverterConverter}, Mode=OneWay}"
                                     RelativePanel.Below="FirstName"
-                                    RelativePanel.RightOf="CompanyText"
+                                    RelativePanel.RightOf="RGText"
                                     Text="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
                                 <TextBox
                                     x:Name="EmailText"
                                     Grid.Column="2"
@@ -149,16 +163,6 @@
                                     RelativePanel.Below="FirstName"
                                     RelativePanel.RightOf="PhoneNumber"
                                     Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                <TextBox
-                                    x:Name="RGText"
-                                    Grid.Row="1"
-                                    MinWidth="120"
-                                    Margin="0,16,16,0"
-                                    Header="RG"
-                                    IsReadOnly="{x:Bind ViewModel.IsInEdit, Converter={StaticResource boolInverterConverter}, Mode=OneWay}"
-                                    RelativePanel.AlignLeftWithPanel="True"
-                                    RelativePanel.Below="RG"
-                                    Text="{Binding Company, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                                 <TextBox
                                     x:Name="CPFText"
@@ -167,9 +171,9 @@
                                     Margin="0,16,16,0"
                                     Header="CPF"
                                     IsReadOnly="{x:Bind ViewModel.IsInEdit, Converter={StaticResource boolInverterConverter}, Mode=OneWay}"
-                                    RelativePanel.AlignLeftWithPanel="True"
-                                    RelativePanel.Below="CPF"
-                                    Text="{Binding Company, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    RelativePanel.Below="FirstName"
+                                    RelativePanel.RightOf="EmailText"
+                                    Text="{Binding CPF, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             </RelativePanel>
 
                         </uc:DetailExpander.Pane>
@@ -205,7 +209,8 @@
                         <uc:DetailExpander.Pane>
                             <Grid>
                                 <Grid.Resources>
-                                    <x:Double x:Key="BuildingIdWidth">48</x:Double>
+                                    <x:Double x:Key="StringWidth">80</x:Double>
+                                    <x:Double x:Key="BuildingIdWidth">25</x:Double>
                                     <x:Double x:Key="DateWidth">64</x:Double>
                                     <x:Double x:Key="AmountWidth">72</x:Double>
                                     <x:Double x:Key="StatusWidth">64</x:Double>
@@ -229,16 +234,16 @@
                                     <TextBlock
                                         Width="{StaticResource BuildingIdWidth}"
                                         Margin="12,0,0,0"
-                                        Text="BuildingId" />
-                                    <TextBlock Width="{StaticResource stringVisConverter}" Text="AddressType" />
-                                    <TextBlock Width="{StaticResource stringVisConverter}" Text="AddressStret" />
-                                    <TextBlock Width="{StaticResource stringVisConverter}" Text="AddressStreetNumber" />
-                                    <TextBlock Width="{StaticResource stringVisConverter}" Text="AddressNeigborhood" />
-                                    <TextBlock Width="{StaticResource AmountWidth}" Text="ListedValue" />
-                                    <TextBlock Width="{StaticResource AmountWidth}" Text="MarketValue" />
-                                    <TextBlock Width="{StaticResource DateWidth}" Text="DatePlaced" />
-                                    <TextBlock Width="{StaticResource DateWidth}" Text="DateFilled" />
-                                    <TextBlock Width="{StaticResource StatusWidth}" Text="Type" />
+                                        Text="#" />
+                                    <TextBlock Width="{StaticResource StatusWidth}" Text="Tipo" />
+                                    <TextBlock Width="{StaticResource StringWidth}" Text="Rua" />
+                                    <TextBlock Width="{StaticResource StringWidth}" Text="Num" />
+                                    <TextBlock Width="{StaticResource StringWidth}" Text="Bairro" />
+                                    <TextBlock Width="{StaticResource AmountWidth}" Text="Valor Solicitado" />
+                                    <TextBlock Width="{StaticResource AmountWidth}" Text="Mercado" />
+                                    <TextBlock Width="{StaticResource DateWidth}" Text="Data Inserção" />
+                                    <TextBlock Width="{StaticResource DateWidth}" Text="Data Retirada" />
+                                    <TextBlock Width="{StaticResource StatusWidth}" Text="Situação" />
                                 </StackPanel>
                                 <ProgressBar
                                     x:Name="ProgressIndicator"
@@ -249,7 +254,7 @@
                                     IsIndeterminate="True"
                                     Visibility="{x:Bind ViewModel.Customer.IsLoading, Converter={StaticResource boolToVisConverter}, Mode=OneWay}" />
                                 <ListView
-                                    x:Name="OrdersListView"
+                                    x:Name="BuildingsListView"
                                     Grid.Row="1"
                                     ItemsSource="{x:Bind ViewModel.Customer.Buildings}">
                                     <ListView.ItemTemplate>
@@ -261,26 +266,26 @@
                                                     </Style>
                                                 </StackPanel.Resources>
                                                 <HyperlinkButton
-                                                    Width="{StaticResource BuildingWidth}"
+                                                    Width="{StaticResource BuildingIdWidth}"
                                                     Padding="0"
                                                     HorizontalContentAlignment="Left"
                                                     Click="ViewBuildingButton_Click"
-                                                    Content="{x:Bind Buildings}"
+                                                    Content="{x:Bind Id}"
                                                     FontSize="12"
                                                     IsTabStop="False" />
                                                 <TextBlock
                                                     Width="{StaticResource BuildingIdWidth}"
                                                     Margin="12,0,0,0"
-                                                    Text="BuildingId" />
-                                                <TextBlock Width="{StaticResource stringVisConverter}" Text="AddressType" />
-                                                <TextBlock Width="{StaticResource stringVisConverter}" Text="AddressStret" />
-                                                <TextBlock Width="{StaticResource stringVisConverter}" Text="AddressStreetNumber" />
-                                                <TextBlock Width="{StaticResource stringVisConverter}" Text="AddressNeigborhood" />
-                                                <TextBlock Width="{StaticResource AmountWidth}" Text="ListedValue" />
-                                                <TextBlock Width="{StaticResource AmountWidth}" Text="MarketValue" />
-                                                <TextBlock Width="{StaticResource DateWidth}" Text="Iniciado" />
-                                                <TextBlock Width="{StaticResource DateWidth}" Text="Preenchido" />
-                                                <TextBlock Width="{StaticResource StatusWidth}" Text="Type" />
+                                                    Text="Id" />
+                                                <TextBlock Width="{StaticResource StatusWidth}" Text="Tipo" />
+                                                <TextBlock Width="{StaticResource StringWidth}" Text="Rua" />
+                                                <TextBlock Width="{StaticResource StringWidth}" Text="No" />
+                                                <TextBlock Width="{StaticResource StringWidth}" Text="Bairro" />
+                                                <TextBlock Width="{StaticResource AmountWidth}" Text="Valor" />
+                                                <TextBlock Width="{StaticResource AmountWidth}" Text="Mercado" />
+                                                <TextBlock Width="{StaticResource DateWidth}" Text="Data Cadastro" />
+                                                <TextBlock Width="{StaticResource DateWidth}" Text="Data Encerramento" />
+                                                <TextBlock Width="{StaticResource StatusWidth}" Text="Situação" />
                                             </StackPanel>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
@@ -292,7 +297,7 @@
                                 <TextBlock
                                     Style="{StaticResource CaptionTextBlockStyle}"
                                     Text="{x:Bind ViewModel.Customer.BuildingsCount}"
-                                    ToolTipService.ToolTip="Count of buildings" />
+                                    ToolTipService.ToolTip="Quantidade de imoveis" />
                                 <AppBarSeparator Height="12" />
                             </StackPanel>
                         </uc:DetailExpander.HeaderContent>
@@ -329,7 +334,7 @@
                         <Setter Target="mainCommandBar.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="mainCommandBar.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="EmailText.(RelativePanel.AlignLeftWithPanel)" Value="True" />
-                        <Setter Target="EmailText.(RelativePanel.Below)" Value="CompanyText" />
+                        <Setter Target="EmailText.(RelativePanel.Below)" Value="RGText" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState>
@@ -343,7 +348,7 @@
                         <Setter Target="mainCommandBar.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="CustomerSearchBox.Width" Value="300" />
                         <Setter Target="EmailText.(RelativePanel.AlignLeftWithPanel)" Value="True" />
-                        <Setter Target="EmailText.(RelativePanel.Below)" Value="CompanyText" />
+                        <Setter Target="EmailText.(RelativePanel.Below)" Value="RGText" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

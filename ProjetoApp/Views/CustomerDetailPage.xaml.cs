@@ -38,7 +38,7 @@ namespace ProjetoApp.Views
             {
                 ViewModel.Customer = new CustomerViewModel();
                 Bindings.Update();
-                PageHeaderText.Text = "New customer";
+                PageHeaderText.Text = "Novo Cliente";
             }
             else if (ViewModel.Customer != customer)
             {
@@ -112,15 +112,8 @@ namespace ProjetoApp.Views
         {
             if (ApiInformation.IsPropertyPresent("Windows.UI.Xaml.Controls.CommandBar", "DefaultLabelPosition"))
             {
-                if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
-                {
-                    (sender as CommandBar).DefaultLabelPosition = CommandBarDefaultLabelPosition.Bottom;
-                }
-                else
-                {
-                    (sender as CommandBar).DefaultLabelPosition = CommandBarDefaultLabelPosition.Right;
-                }
-
+                (sender as CommandBar).DefaultLabelPosition = CommandBarDefaultLabelPosition.Right;
+                
                 // Disable dynamic overflow on this page. There are only a few commands, and it causes
                 // layout problems when save and cancel commands are shown and hidden.
                 (sender as CommandBar).IsDynamicOverflowEnabled = false;
@@ -128,14 +121,14 @@ namespace ProjetoApp.Views
         }
 
         /// <summary>
-        /// Navigates to the order page for the customer.
+        /// Navigates to the buildings page from the customer.
         /// </summary>
         private void ViewBuildingButton_Click(object sender, RoutedEventArgs e) =>
             Frame.Navigate(typeof(BuildingDetailPage), ((FrameworkElement)sender).DataContext,
                 new DrillInNavigationTransitionInfo());
 
         /// <summary>
-        /// Adds a new order for the customer.
+        /// Adds a new building to the customer.
         /// </summary>
         private void AddBuilding_Click(object sender, RoutedEventArgs e) =>
             Frame.Navigate(typeof(BuildingDetailPage), ViewModel.Customer.Model);
